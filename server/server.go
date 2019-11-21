@@ -180,10 +180,13 @@ func AddTask(t *file.Tunnel) error {
 		RunList[t.Id] = nil
 		return nil
 	}
+    // dirty fix for opening same port on multi ip
+    /*
 	if b := tool.TestServerPort(t.Port, t.Mode); !b && t.Mode != "httpHostServer" {
 		logs.Error("taskId %d start error port %d open failed", t.Id, t.Port)
 		return errors.New("the port open error")
 	}
+    */
 	if minute, err := beego.AppConfig.Int("flow_store_interval"); err == nil && minute > 0 {
 		go flowSession(time.Minute * time.Duration(minute))
 	}
